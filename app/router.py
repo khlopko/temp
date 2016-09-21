@@ -10,37 +10,62 @@ defaultPath = '/api/v0.1/'
 
 @app.route(defaultPath + 'groups', methods=['GET'])
 def getGroups():
-    groups = models.Group.query.all()
+    groups = map(parseGroup, models.Group.query.all())
     json = {'groups': groups}
 
     return jsonify(json)
 
+def parseGroup(group):
+    return {
+        'id': group.id,
+        'title': group.title,
+    }
+
 #
-# Concrete group lessons by groupId
+# Concrete group lessons by groupId.
 #
 
-@app.route(defaultPath + 'groups/<int:groupId>', methods=['GET'])
+@app.route(defaultPath + 'lessons/<int:groupId>', methods=['GET'])
 def getGroup(groupId):
-    lessons = models.Lesson.query.filter(models.Lesson.groupId == groupId).all()
+    lessons = map(parseLesson, models.Lesson.query.filter(models.Lesson.groupId == groupId).all())
     json = {'lessons': lessons}
 
     return jsonify(json)
 
+def parseLesson(lesson):
+    return {
+        'id': lesson.id,
+        'title': lesson.title,
+        'room': lesson.room,
+        'lector': parseLector(lesson.lector),
+        'dayOfWeek': lesson.dayOfWeek,
+        'weekNumber': lesson.weekNumber,
+        'position': lesson.position,
+    }
+
 #
-# List of all lectors
+# List of all lectors.
 #
 
 @app.route(defaultPath + 'lectors', methods=['GET'])
 def getLectors():
-    lectors = models.Lector.query.all()
+    lectors = map(parseLector, models.Lector.query.all())
     json = {'lectors': lectors}
 
     return jsonify(json)
 
 @app.route(defaultPath + 'lectors/<int:lectorId>', methods=['GET'])
 def getLector(lectorId):
-    lectors = models.Lector.query.filter(models.Lector.id == lectorId).first()
-    if lectors != None:
-        return jsonify(lectors)
+    lector = models.Lector.query.filter(models.Lector.id == lectorId).first()
+    if lector != None:
+        return jsonify(parseLector(lector))
     else:
         abort(404)
+
+def parseLector(lector):
+    return {
+        'id': lector.id,
+        'firstname': lector.firstname,
+        'lastname': lector.lastname,
+        'sorname': lector.sorname,
+    }

@@ -1,4 +1,67 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Admin Panel</h1>
+
+<header>
+	<h1 style="margin-left: 15px">Schedulee <small>Admin Panel</small></h1>
+	<hr/>
+</header>
+
+<div class="container-fluid">
+<div class="row">
+	<div class="col-md-5">
+		<form class="form-inline" method="post" name="add-group">
+			{{ addGroupForm.hidden_tag()}}
+			{{ addGroupForm.titleField(class="form-control") }}
+			<input type="submit" value="Add" class="btn btn-primary">
+		</form>
+		{% with groups = models.Group.query.all() %}
+		{% if groups %}
+		<script type="text/javascript">
+ 			function openGroup(id) {
+ 				window.location.href = "/groups/" + id;
+			}
+ 		</script>
+		<table class="table table-hover">
+		{% for group in groups %}
+        	<tr>
+        		<td id="{{ group.id }}" onclick="openGroup({{ group.id }})">
+ 					{{ group.title }}	
+  				</td>
+        	</tr>
+    	{% endfor %}
+		</table>
+		{% endif %}
+		{% endwith %}	
+	</div>
+
+	<div class="col-md-5">
+		<form method="post" name="add-lector">
+			{{ addLectorForm.hidden_tag()}}
+			{{ addLectorForm.lastname(class="form-control", placeholder='Last Name') }}
+			<br>
+			{{ addLectorForm.firstname(class="form-control", placeholder='First Name') }}
+			<br>
+			{{ addLectorForm.sorname(class="form-control", placeholder='Sor-Name') }}
+			<br>
+			<input type="submit" value="Add" class="btn btn-primary">
+		</form>
+		{% with lectors = models.Lector.query.all() %}
+		{% if lectors %}
+		<table class="table table-hover">
+		{% for lector in lectors %}
+        	<tr>
+        		<td><div class="checkbox"><label>
+    				<input type="checkbox" value="">
+    				{{ lector.lastname }} {{ lector.firstname }} {{ lector.sorname }}
+  				</label></div></td>
+        	</tr>
+    	{% endfor %}
+		</table>
+		{% endif %}
+		{% endwith %}
+	</div>
+
+</div>
+</div>
+
 {% endblock %}

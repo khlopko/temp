@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<header>
+	<h1 style="margin-left: 15px">Schedulee <small>{{ group.title }}</small></h1>
+	<hr/>
+
+	<form enctype='text/plain' action="/lessons/create/{{ group.id }}" method="get" class="form-inline">
+		<input type="submit" value="Add Lesson" class="btn btn-primary">
+	</form>
+
+</header>
+
+<div class="container-fluid">
+
+<table class="table table-hover">
+{% for lesson in lessons %}
+	<tr>
+		<td>{{ lesson.title }}</td>
+		<td>{{ lesson.room }}</td>
+		<td>{{ lesson.lector.lastname }} {{ lesson.lector.firstname }} {{ lesson.lector.sorname }}</td>
+		<td>{{ reverseDays[lesson.dayOfWeek] }}</td>
+		<td>{{ lesson.weekNumber }}</td>
+		<td>{{ lesson.position }}</td>
+    </tr>
+{% endfor %}
+</table>
+
+</div>
+
+{% endblock %}

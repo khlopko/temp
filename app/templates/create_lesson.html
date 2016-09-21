@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+
+<header>
+	<h1 style="margin-left: 15px">Schedulee <small>Create Lesson</small></h1>
+	<hr/>
+</header>
+
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-6">
+<form id="create-lesson-form" name="create" method="post">
+
+	<div class="form-group">
+	<label>Group: </label>
+	<input name="groupId" value="{{ group.id }}" class="form-control" />
+	</div>
+
+	<div class="form-group">
+	<label>Title: </label>
+	<input name="title" value="" class="form-control" />
+	</div>
+	
+	<div class="form-group">
+	<label>Room: </label>
+	<input name="room" value="" class="form-control" />
+	</div>
+	
+	<div class="form-group">
+	<label>Lector: </label>
+	<select name="lectorId" class="form-control">
+		{% for lector in lectors %}
+		<option value="{{ lector.id }}">{{ lector.lastname }} {{ lector.firstname }} {{ lector.sorname }}</option>
+		{% endfor %}
+	</select>
+	</div>
+	
+	<div class="form-group">
+	<label>Position: </label>
+	<input name="position" value="" class="form-control" />
+	</div>
+	
+
+	<div class="form-group">
+	<label for="select-day-of-week">Day of week: </label>
+	<select name="dayOfWeek" id="select-day-of-week" class="form-control">
+		{% for day in days %}
+		<option>{{ day }}</option>
+		{% endfor %}
+	</select>
+	</div>
+	
+	<div class="form-group">
+	<label for="select-week">Week number: </label>
+	<select name="weekNumber" class="form-control" id="select-week">
+		{% for week in weeks %}
+		<option>{{ week }}</option>
+		{% endfor %}
+	</select>
+	</div>
+	
+	<script type="text/javascript">
+		var formData = JSON.stringify($("#create-lesson-form").serializeDictionary());
+		$.ajax({
+  			type: "POST",
+  			url: "/lessons/create",
+  			data: formData,
+  			success: function(){},
+  			dataType: "json",
+  			contentType : "application/json"
+		});
+	</script>
+	<input type="submit" name="create" value="Create" onclick="handleCreate()" class="btn btn-primary form-control" />
+</form>
+</div>
+</div>
+</div>
+
+{% endblock %}

@@ -25,7 +25,7 @@ def parseGroup(group):
 # Concrete group lessons by groupId.
 #
 
-@app.route(defaultPath + 'lessons/<int:groupId>', methods=['GET'])
+@app.route(defaultPath + 'groups/<int:groupId>/lessons', methods=['GET'])
 def getGroup(groupId):
     lessons = map(parseLesson, models.Lesson.query.filter(models.Lesson.groupId == groupId).all())
     json = {'lessons': lessons}

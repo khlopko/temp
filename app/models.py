@@ -6,22 +6,23 @@ from app import db
 # Weekday of lesson.
 #
 
-class DayOfWeek(object):
-    monday = 0
-    tuesday = 1
-    wednesday = 2
-    thursday = 3
-    friday = 4
-    saturday = 5
-    sunday = 6
+days = {
+    'Monday': 0,
+    'Tuesday': 1,
+    'Wednesday': 2,
+    'Thursday': 3,
+    'Friday': 4,
+    'Saturday': 5,
+    'Sunday': 6
+}
 
 #
 # Week of lesson.
 #
 
 class WeekNumber(object):
-    first = 0
-    second = 1
+    first = 1
+    second = 2
 
 #
 # Lesson model.

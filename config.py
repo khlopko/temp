@@ -1,7 +1,5 @@
 #!flask/bin/python
 
-port = 8080
-
 CSRF_ENABLED = True
 SECRET_KEY = 'SecRetKeyForTesTinGgg.'
 

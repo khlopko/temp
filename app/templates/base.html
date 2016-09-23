@@ -26,6 +26,13 @@
   </head>
 
   <body>
+
+    <header>
+        <h1 style="margin-left: 15px">{{ title }}</h1>
+        <hr/>
+        {% block header %}{% endblock %}
+    </header>
+
     {% block content %}{% endblock %}
   </body>
 

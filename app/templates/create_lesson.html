@@ -9,7 +9,7 @@
 <div class="container-fluid">
 <div class="row">
 <div class="col-md-6">
-<form id="create-lesson-form" name="create" method="post">
+<form id="create-lesson-form" name="create" action="/lessons/create/{{ group.id }}" method="post">
 
 	<div class="form-group">
 	<label>Group: </label>
@@ -59,18 +59,7 @@
 	</select>
 	</div>
 	
-	<script type="text/javascript">
-		var formData = JSON.stringify($("#create-lesson-form").serializeDictionary());
-		$.ajax({
-  			type: "POST",
-  			url: "/lessons/create",
-  			data: formData,
-  			success: function(){},
-  			dataType: "json",
-  			contentType : "application/json"
-		});
-	</script>
-	<input type="submit" name="create" value="Create" onclick="handleCreate()" class="btn btn-primary form-control" />
+	<input type="submit" name="create" value="Create" class="btn btn-primary form-control" />
 </form>
 </div>
 </div>

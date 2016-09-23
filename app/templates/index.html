@@ -1,7 +1,50 @@
 {% extends "base.html" %}
+
+{% block header %}
+
+<a href="/adminpanel" style="margin-left: 20">Admin Panel</a>
+<hr/>
+
+{% endblock %}
+
 {% block content %}
-<h1>Hi, {{user.nickname}}!</h1>
-{% for post in posts %}
-<div><p>{{post.author.nickname}} says: <b>{{post.body}}</b></p></div>
+
+<table class="table table-hover table-bordered">
+	
+<tr>
+	<th class="text-center">Group</th>
+	{% for day in dayKeys %}
+	<th class="text-center">{{ day }}</th>
+	{% endfor %}
+</tr>
+
+{% for group in groups %}
+
+<tr>
+
+	<td class="text-center"> {{ group.title }} </td>
+
+	<script>{{ helper.setGroup(group) }}</script>
+	{% for day in dayValues %}
+	{% with lessons = helper.getLessons(day) %}
+	<td>
+		<table>
+		{% for lesson in lessons %}
+			<tr>
+				{% if lesson != None %}
+				<td>{{ lesson.title }}</td>
+				{% endif %}
+			</tr>
+		{% endfor %}
+		</table>
+	</td>
+	{% endwith %}
+	{% endfor %}
+
+</tr>
+
 {% endfor %}
+
+</table>
+
 {% endblock %}

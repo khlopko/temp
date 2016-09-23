@@ -1,15 +1,15 @@
 {% extends "base.html" %}
+
+{% block header %}
+
+<form enctype='text/plain' action="/lessons/create/{{ group.id }}" method="get" class="form-inline">
+	<input type="submit" value="Add Lesson" class="btn btn-primary" style="margin-left: 20px">
+</form>
+<hr/>
+
+{% endblock %}
+
 {% block content %}
-
-<header>
-	<h1 style="margin-left: 15px">Schedulee <small>{{ group.title }}</small></h1>
-	<hr/>
-
-	<form enctype='text/plain' action="/lessons/create/{{ group.id }}" method="get" class="form-inline">
-		<input type="submit" value="Add Lesson" class="btn btn-primary">
-	</form>
-
-</header>
 
 <div class="container-fluid">
 

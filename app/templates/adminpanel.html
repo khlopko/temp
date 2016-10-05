@@ -7,7 +7,8 @@
 	<div class="col-md-5">
 		<form class="form-inline" method="post" name="add-group">
 			{{ addGroupForm.hidden_tag()}}
-			{{ addGroupForm.titleField(class="form-control") }}
+			{{ addGroupForm.title(class="form-control") }}
+			{{ addGroupForm.course(class="form-control") }}
 			<input type="submit" value="Add" class="btn btn-primary">
 		</form>
 		{% with groups = models.Group.query.all() %}

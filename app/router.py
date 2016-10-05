@@ -6,11 +6,13 @@ from app import app, jsonify, db, models, make_response, error, abort
 # List of all groups
 #
 
+
 def getGroups():
     groups = map(parseGroup, models.Group.query.all())
     json = {'groups': groups}
 
     return jsonify(json)
+
 
 def parseGroup(group):
     return {
@@ -22,11 +24,13 @@ def parseGroup(group):
 # Concrete group lessons by groupId.
 #
 
+
 def getLessons(groupId):
     lessons = map(parseLesson, models.Lesson.query.filter(models.Lesson.groupId == groupId).all())
     json = {'lessons': lessons}
 
     return jsonify(json)
+
 
 def parseLesson(lesson):
     return {
@@ -43,18 +47,21 @@ def parseLesson(lesson):
 # List of all lectors.
 #
 
+
 def getLectors():
     lectors = map(parseLector, models.Lector.query.all())
     json = {'lectors': lectors}
 
     return jsonify(json)
 
+
 def getLector(lectorId):
     lector = models.Lector.query.filter(models.Lector.id == lectorId).first()
-    if lector != None:
+    if lector is not None:
         return jsonify(parseLector(lector))
     else:
         abort(404)
+
 
 def parseLector(lector):
     return {

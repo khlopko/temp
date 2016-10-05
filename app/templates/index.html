@@ -10,7 +10,7 @@
 {% block content %}
 
 <table class="table table-hover table-bordered">
-	
+
 <tr>
 	<th class="text-center">Group</th>
 	{% for day in dayKeys %}
@@ -24,9 +24,9 @@
 
 	<td class="text-center"> {{ group.title }} </td>
 
-	<script>{{ helper.setGroup(group) }}</script>
+	<script>{{ helper.set_group(group) }}</script>
 	{% for day in dayValues %}
-	{% with lessons = helper.getLessons(day) %}
+	{% with lessons = helper.all_at_day(day) %}
 	<td>
 		<table>
 		{% for lesson in lessons %}

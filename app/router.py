@@ -1,14 +1,16 @@
 #!flask/bin/python
 
 from app import app, jsonify, db, models, make_response, error, abort
+from groups import *
+from lessons import *
 
-#
-# List of all groups
-#
+
+groupsContent = GroupsContent()
+lessonsContent = LessonsContent()
 
 
 def getGroups():
-    groups = map(parseGroup, models.Group.query.all())
+    groups = map(parseGroup, groupsContent.all())
     json = {'groups': groups}
 
     return jsonify(json)
@@ -26,7 +28,7 @@ def parseGroup(group):
 
 
 def getLessons(groupId):
-    lessons = map(parseLesson, models.Lesson.query.filter(models.Lesson.groupId == groupId).all())
+    lessons = map(parseLesson, lessonsContent.all_for_group(groupId))
     json = {'lessons': lessons}
 
     return jsonify(json)

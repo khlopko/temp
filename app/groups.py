@@ -1,6 +1,8 @@
 #!flask/bin/python
 
-from app import models, db
+from app import db
+from models.group import Group
+from errors_helper import StatusCode
 
 
 class GroupsContent:
@@ -9,38 +11,34 @@ class GroupsContent:
         self.helper = GroupsHelper()
 
     def all(self):
-        return models.Group.query.all()
+        return Group.query.all()
 
     def add(self, group):
         if self.helper.is_exists(group):
-            return GroupProcessCode.already_exists
+            return StatusCode.already_exists
         db.session.add(group)
         db.session.commit()
-        return GroupProcessCode.ok
+        return StatusCode.ok
 
     def delete(self, group):
         group.delete()
         db.session.commit()
-        return GroupProcessCode.ok
+        return StatusCode.ok
 
-    def get(self, groupId):
+    def get(self, group_id):
         groups = self.all()
-        group = next(group for group in groups if group.id == groupId)
+        if group_id is None:
+            group_id = 1
+        group = [g for g in groups if g.id == group_id][0]
         if group is None:
-            return GroupProcessCode.no_such_group
+            return StatusCode.not_found
         return group
 
 
 class GroupsHelper:
 
     def is_exists(self, group):
-        group = models.Group.query.filter(
-            models.Group.title == group.title,
-            models.Group.course == group.course).first()
+        group = Group.query.filter(
+            Group.title == group.title,
+            Group.course == group.course).first()
         return group is not None
-
-
-class GroupProcessCode:
-    ok = -600
-    already_exists = 677
-    no_such_group = 680

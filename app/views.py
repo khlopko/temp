@@ -1,10 +1,15 @@
 #!flask/bin/python
 
 from flask import render_template, redirect, request
-from app import db, models, title
+from app import db, models, title, jsonify
 from forms import *
-from groups import GroupsContent, GroupProcessCode
-from lessons import LessonsContent, LessonProcessCode
+from errors_helper import StatusCode, ErrorHelper
+from groups import GroupsContent
+from lessons import LessonsContent
+from models.days import days
+from models.group import Group
+from models.lector import Lector
+from models.week_number import WeekNumber
 
 
 groupsContent = GroupsContent()
@@ -12,47 +17,53 @@ lessonsContent = LessonsContent()
 
 
 def index():
-    groups = groupsContent.all()
-
     return render_template(
         'index.html',
         title=title,
-        groups=groups,
-        dayKeys=sorted(models.days, key=models.days.__getitem__),
-        dayValues=sorted(models.days.values()),
+        groups=groupsContent.all(),
+        dayKeys=sorted(days, key=days.__getitem__),
+        dayValues=sorted(days.values()),
         helper=lessonsContent)
 
 
 def groups(groupId):
     group = groupsContent.get(groupId)
-    lessons = lessonsContent.all_for_group(groupId)
+    lessons = group.lessons
 
     return render_template(
         'group.html',
         title='Group ' + group.title,
         group=group,
         lessons=lessons,
-        reverseDays=dict((v, k) for k, v in models.days.iteritems()))
+        reverseDays=dict((v, k) for k, v in days.iteritems()))
 
 
 def createLesson(groupId):
     if request.method == 'GET':
-        group = groupsContent.get(groupId)
-        lectors = sorted(models.Lector.query.all())
-        weeks = [models.WeekNumber.first, models.WeekNumber.second]
-        return render_template(
-            'create_lesson.html',
-            title='Create new lesson',
-            group=group,
-            lectors=lectors,
-            weeks=weeks,
-            days=sorted(models.days, key=models.days.__getitem__))
+        return render_create_lesson(groupId)
 
     if request.method == 'POST':
-        json = request.form
+        json = {}
+        if request.headers['Content-Type'] == 'application/json':
+            json = request.get_json().copy()
+        elif 'multipart/form-data' in request.headers['Content-Type']:
+            json = request.form.copy()
+        else:
+            abort(400)
+        json['group_id'] = groupId
+        print json
         code = lessonsContent.create_from_json(json)
-        print('ERROR HERE >>> ' + str(code))
-        return redirect('/groups/' + str(groupId))
+        return jsonify(ErrorHelper.make_response_for_code(code))
+
+
+def render_create_lesson(groupId):
+    return render_template(
+        'create_lesson.html',
+        title='Create new lesson',
+        group=groupsContent.get(groupId),
+        lectors=sorted(Lector.query.all()),
+        weeks=[WeekNumber.first, WeekNumber.second],
+        days=sorted(days, key=days.__getitem__))
 
 
 def adminpanel():
@@ -61,15 +72,15 @@ def adminpanel():
     addLectorForm = AddLectorForm()
 
     if addGroupForm.validate_on_submit():
-        group = models.Group(
+        group = Group(
             title=addGroupForm.title.data,
             course=addGroupForm.course.data)
         code = groupsContent.add(group)
-        if code == GroupProcessCode.ok:
+        if code == StatusCode.ok:
             return redirect('/adminpanel')
 
     if addLectorForm.validate_on_submit():
-        lector = models.Lector(
+        lector = Lector(
             firstname=addLectorForm.firstname.data,
             lastname=addLectorForm.lastname.data,
             sorname=addLectorForm.sorname.data)
@@ -81,6 +92,7 @@ def adminpanel():
     return render_template(
         'adminpanel.html',
         title='Admin Panel',
-        models=models,
+        groups=Group.query.all(),
+        lectors=Lector.query.all(),
         addGroupForm=addGroupForm,
         addLectorForm=addLectorForm)

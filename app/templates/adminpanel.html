@@ -11,7 +11,6 @@
 			{{ addGroupForm.course(class="form-control") }}
 			<input type="submit" value="Add" class="btn btn-primary">
 		</form>
-		{% with groups = models.Group.query.all() %}
 		{% if groups %}
 		<script type="text/javascript">
  			function openGroup(id) {
@@ -28,7 +27,6 @@
     	{% endfor %}
 		</table>
 		{% endif %}
-		{% endwith %}	
 	</div>
 
 	<div class="col-md-5">
@@ -47,7 +45,6 @@
 			<input type="submit" value="Add" class="btn btn-primary form-control">
 			</div>
 		</form>
-		{% with lectors = models.Lector.query.all() %}
 		{% if lectors %}
 		<table class="table table-hover">
 		{% for lector in lectors %}
@@ -59,7 +56,6 @@
     	{% endfor %}
 		</table>
 		{% endif %}
-		{% endwith %}
 	</div>
 
 </div>

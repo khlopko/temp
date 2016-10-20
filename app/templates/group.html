@@ -23,14 +23,16 @@
 		<th>Position</th>
 	</tr>
 {% for lesson in lessons %}
+{% for item in lesson.info %}
 	<tr>
 		<td>{{ lesson.title }}</td>
-		<td>{{ lesson.room }}</td>
+		<td>{{ item.room }}</td>
 		<td>{{ lesson.lector.lastname }} {{ lesson.lector.firstname }} {{ lesson.lector.sorname }}</td>
-		<td>{{ reverseDays[lesson.dayOfWeek] }}</td>
-		<td>{{ lesson.weekNumber }}</td>
-		<td>{{ lesson.position }}</td>
+		<td>{{ reverseDays[item.day_of_week] }}</td>
+		<td>{{ item.week_number }}</td>
+		<td>{{ item.position }}</td>
     </tr>
+{% endfor %}
 {% endfor %}
 </table>
 

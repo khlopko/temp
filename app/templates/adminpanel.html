@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block content %}
 
 <div class="container-fluid">
@@ -11,53 +10,66 @@
 			{{ addGroupForm.course(class="form-control") }}
 			<input type="submit" value="Add" class="btn btn-primary">
 		</form>
+
 		{% if groups %}
-		<script type="text/javascript">
+		
+        <script type="text/javascript">
  			function openGroup(id) {
  				window.location.href = "/groups/" + id;
 			}
  		</script>
-		<table class="table table-hover">
-		{% for group in groups %}
+		
+        <table class="table table-hover">
+		
+        {% for group in groups %}
         	<tr>
         		<td id="{{ group.id }}" onclick="openGroup({{ group.id }})">
  					{{ group.title }}	
   				</td>
         	</tr>
     	{% endfor %}
-		</table>
-		{% endif %}
+		
+        </table>
+		
+        {% endif %}
 	</div>
 
 	<div class="col-md-5">
 		<form method="post" name="add-lector">
-			{{ addLectorForm.hidden_tag()}}
-			<div class="form-group">
+			
+            {{ addLectorForm.hidden_tag()}}
+			
+            <div class="form-group">
 			{{ addLectorForm.lastname(class="form-control", placeholder='Last Name') }}
 			</div>
-			<div class="form-group">
+			
+            <div class="form-group">
 			{{ addLectorForm.firstname(class="form-control", placeholder='First Name') }}
 			</div>
-			<div class="form-group">
+			
+            <div class="form-group">
 			{{ addLectorForm.sorname(class="form-control", placeholder='Sor-Name') }}
 			</div>
-			<div class="form-group">
+			
+            <div class="form-group">
 			<input type="submit" value="Add" class="btn btn-primary form-control">
 			</div>
 		</form>
-		{% if lectors %}
+		
+        {% if lectors %}
 		<table class="table table-hover">
-		{% for lector in lectors %}
+		
+        {% for lector in lectors %}
         	<tr>
         		<td>
     				{{ lector.lastname }} {{ lector.firstname }} {{ lector.sorname }}
   				</td>
         	</tr>
     	{% endfor %}
-		</table>
+		
+        </table>
 		{% endif %}
 	</div>
-
 </div>
 </div>
 

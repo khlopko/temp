@@ -17,6 +17,7 @@ lessonsContent = LessonsContent()
 
 
 def index():
+    
     return render_template(
         'index.html',
         title=title,
@@ -51,12 +52,13 @@ def createLesson(groupId):
         else:
             abort(400)
         json['group_id'] = groupId
-        print json
         code = lessonsContent.create_from_json(json)
+
         return jsonify(ErrorHelper.make_response_for_code(code))
 
 
 def render_create_lesson(groupId):
+
     return render_template(
         'create_lesson.html',
         title='Create new lesson',
@@ -67,7 +69,6 @@ def render_create_lesson(groupId):
 
 
 def adminpanel():
-
     addGroupForm = AddGroupForm()
     addLectorForm = AddLectorForm()
 

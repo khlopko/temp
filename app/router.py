@@ -2,6 +2,7 @@
 
 from app import jsonify, abort
 from models import *
+from models.lector import Lector
 from groups import *
 from lessons import *
 
@@ -34,6 +35,6 @@ def getLectors():
 def getLector(lectorId):
     lector = Lector.query.filter(Lector.id == lectorId).first()
     if lector is not None:
-        return jsonify(parseLector(lector))
+        return jsonify(lector.serialized)
     else:
         abort(404)

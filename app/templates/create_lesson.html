@@ -2,66 +2,67 @@
 {% block content %}
 
 <header>
+
 	<h1 style="margin-left: 15px">Schedulee <small>Create Lesson</small></h1>
 	<hr/>
+	
 </header>
 
-<div class="container-fluid">
-<div class="row">
-<div class="col-md-6">
-<form method="post" enctype="multipart/form-data" action="/lessons/create/{{ group.id }}">
+<div class="container-fluid"><div class="row"><div class="col-md-6">
 
-	<div class="form-group">
-	<label>Group: </label>
-	<input value="{{ group.title }}" class="form-control" disabled="true" />
-	</div>
+	<form method="post" enctype="multipart/form-data" action="/lessons/create/{{ group.id }}">
 
-	<div class="form-group">
-	<label>Title: </label>
-	<input name="title" value="" class="form-control" />
-	</div>
-	
-	<div class="form-group">
-	<label>Room: </label>
-	<input name="room" value="" class="form-control" />
-	</div>
-	
-	<div class="form-group">
-	<label>Lector: </label>
-	<select name="lector_id" class="form-control">
-		{% for lector in lectors %}
-		<option value="{{ lector.id }}">{{ lector.lastname }} {{ lector.firstname }} {{ lector.sorname }}</option>
-		{% endfor %}
-	</select>
-	</div>
-	
-	<div class="form-group">
-	<label>Position: </label>
-	<input name="position" value="" class="form-control" />
-	</div>
-	
+		<div class="form-group">
+			<label>Group: </label>
+			<input value="{{ group.title }}" class="form-control" disabled="true" />
+		</div>
 
-	<div class="form-group">
-	<label for="select-day-of-week">Day of week: </label>
-	<select name="day_of_week" id="select-day-of-week" class="form-control">
-		{% for day in days %}
-		<option>{{ day }}</option>
-		{% endfor %}
-	</select>
-	</div>
+		<div class="form-group">
+			<label>Title: </label>
+			<input name="title" value="" class="form-control" />
+		</div>
 	
-	<div class="form-group">
-	<label for="select-week">Week number: </label>
-	<select name="week_number" class="form-control" id="select-week">
-		{% for week in weeks %}
-		<option>{{ week }}</option>
-		{% endfor %}
-	</select>
-	</div>
-	<input type="submit" value="Create" name="create-btn" class="btn btn-primary form-control" />
-</form>
-</div>
-</div>
-</div>
+		<div class="form-group">
+			<label>Room: </label>
+			<input name="room" value="" class="form-control" />
+		</div>
+	
+		<div class="form-group">
+			<label>Lector: </label>
+			<select name="lector_id" class="form-control">
+			{% for lector in lectors %}
+				<option value="{{ lector.id }}">{{ lector.lastname }} {{ lector.firstname }} {{ lector.sorname }}</option>
+			{% endfor %}
+		</select>
+		</div>
+	
+		<div class="form-group">
+			<label>Position: </label>
+			<input name="position" value="" class="form-control" />
+		</div>
+	
+		<div class="form-group">
+			<label for="select-day-of-week">Day of week: </label>
+			<select name="day_of_week" id="select-day-of-week" class="form-control">
+			{% for day in days %}
+				<option>{{ day }}</option>
+			{% endfor %}
+			</select>
+		</div>
+	
+		<div class="form-group">
+			<label for="select-week">Week number: </label>
+			<select name="week_number" class="form-control" id="select-week">
+			{% for week in weeks %}
+				<option>{{ week }}</option>
+			{% endfor %}
+			</select>
+		</div>
+
+		<input type="submit" value="Create" name="create-btn" class="btn btn-primary form-control" />
+	
+	</form>
+
+</div></div></div>
 
 {% endblock %}

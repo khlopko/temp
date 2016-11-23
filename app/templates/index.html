@@ -1,50 +1,43 @@
 {% extends "base.html" %}
-
 {% block header %}
 
 <a href="/adminpanel" style="margin-left: 20">Admin Panel</a>
 <hr/>
 
 {% endblock %}
-
 {% block content %}
 
 <table class="table table-hover table-bordered">
 
-<tr>
-	<th class="text-center">Group</th>
-	{% for day in dayKeys %}
-	<th class="text-center">{{ day }}</th>
-	{% endfor %}
-</tr>
-
-{% for group in groups %}
-
-<tr>
-
-	<td class="text-center"> {{ group.title }} </td>
-
-	<script>{{ helper.set_group(group) }}</script>
-	{% for day in dayValues %}
-	{% with lessons = helper.all_at_day(day) %}
-	<td>
-		<table>
-		{% for lesson in lessons %}
-			<tr>
-				{% if lesson != None %}
-				<td>{{ lesson.title }}</td>
-				{% endif %}
-			</tr>
+	<tr>
+		<th class="text-center">Group</th>
+		{% for day in dayKeys %}
+			<th class="text-center">{{ day }}</th>
 		{% endfor %}
-		</table>
-	</td>
-	{% endwith %}
+	</tr>
+
+	{% for group in groups %}
+		<tr>
+			<td class="text-center"> {{ group.title }} </td>
+			<script>{{ helper.set_group(group) }}</script>
+			{% for day in dayValues %}
+			{% with lessons = helper.all_at_day(day) %}
+				<td>
+					<table>
+					{% for lesson in lessons %}
+						<tr>
+						{% if lesson != None %}
+							<td>{{ lesson.title }}</td>
+						{% endif %}
+						</tr>
+					{% endfor %}
+					</table>
+				</td>
+			{% endwith %}
+			{% endfor %}
+		</tr>
 	{% endfor %}
-
-</tr>
-
-{% endfor %}
-
+	
 </table>
 
 {% endblock %}

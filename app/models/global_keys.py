@@ -12,6 +12,8 @@ class Key:
     lector = 'lector'
     lector_id = 'lector_id'
     lesson_id = 'lesson_id'
+    pair_begin = 'pair_begin'
+    pair_end = 'pair_end'
     position = 'position'
     room = 'room'
     sorname = 'sorname'

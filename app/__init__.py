@@ -35,7 +35,12 @@ app.add_url_rule('/lessons/create/<int:groupId>', methods=['GET', 'POST'], view_
 
 # define rest api routes
 
-app.add_url_rule('/api/groups', methods=['GET'], view_func=router.getGroups)
-app.add_url_rule('/api/groups/<int:groupId>/lessons', methods=['GET'], view_func=router.getLessons)
-app.add_url_rule('/api/lectors', methods=['GET'], view_func=router.getLectors)
-app.add_url_rule('/api/lectors/<int:lectorId>', methods=['GET'], view_func=router.getLector)
+prefix = '/api/'
+
+app.add_url_rule(prefix + 'groups', methods=['GET'], view_func=router.getGroups)
+app.add_url_rule(prefix + 'groups/<int:groupId>/lessons', methods=['GET'], view_func=router.getLessons)
+app.add_url_rule(prefix + 'lectors', methods=['GET'], view_func=router.getLectors)
+app.add_url_rule(prefix + 'lectors/<int:lectorId>', methods=['GET'], view_func=router.getLector)
+app.add_url_rule(prefix + 'bells', methods=['GET'], view_func=router.getBells)
+app.add_url_rule(prefix + 'bells', methods=['POST'], view_func=router.createBell)
+app.add_url_rule(prefix + 'bells/<int:id>', methods=['DELETE'], view_func=router.deleteBell)

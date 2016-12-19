@@ -25,7 +25,7 @@ class Lesson(db.Model):
         day_of_week = days[json[Key.day_of_week]]
         position = int(json[Key.position])
         week_number = int(json[Key.week_number])
-
+        
         lesson = Lesson(title=title, lector_id=lector_id, group_id=group_id)
         info = LessonInfo(
             room=room,

@@ -3,6 +3,7 @@
 
 class Key:
 
+    course = 'course'
     day_of_week = 'day_of_week'
     firstname = 'firstname'
     group_id = 'group_id'

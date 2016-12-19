@@ -18,4 +18,5 @@ class Group(db.Model):
         return {
             Key.id: self.id,
             Key.title: self.title,
+            Key.course: self.course,
         }

@@ -35,7 +35,14 @@ class LessonsContent:
             db.session.add(info)
             db.session.commit()
 
-        return code
+            return (lesson, code)
+
+        return (None, code)
+
+    def delete(self, lesson_id):
+        Lesson.query.filter(Lesson.id == lesson_id).delete()
+        db.session.commit()
+        return StatusCode.ok
 
 
 class LessonsHelper:

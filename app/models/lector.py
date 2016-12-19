@@ -15,6 +15,14 @@ class Lector(db.Model):
     def __repr__(self):
         return '<Lector %r>' % (self.firstname)
 
+    @staticmethod
+    def parse(json):
+        firstname = json[Key.firstname]
+        sorname = json[Key.sorname]
+        lastname = json[Key.lastname]
+
+        return Lector(firstname=firstname, sorname=sorname, lastname=lastname)
+
     def serialized(self):
         return {
             Key.id: self.id,

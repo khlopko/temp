@@ -3,6 +3,7 @@
 
 class Key:
 
+    course = 'course'
     day_of_week = 'day_of_week'
     firstname = 'firstname'
     group_id = 'group_id'
@@ -12,6 +13,8 @@ class Key:
     lector = 'lector'
     lector_id = 'lector_id'
     lesson_id = 'lesson_id'
+    pair_begin = 'pair_begin'
+    pair_end = 'pair_end'
     position = 'position'
     room = 'room'
     sorname = 'sorname'

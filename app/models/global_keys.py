@@ -19,4 +19,5 @@ class Key:
     room = 'room'
     sorname = 'sorname'
     title = 'title'
+    type = 'type'
     week_number = 'week_number'

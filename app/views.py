@@ -29,6 +29,10 @@ def index():
 
 def groups(groupId):
     group = groupsContent.get(groupId)
+
+    if type(group) is not Group:
+        return jsonify(ErrorHelper.make_response_for_code(group))
+
     lessons = group.lessons
 
     return render_template(

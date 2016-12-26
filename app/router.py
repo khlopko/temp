@@ -10,6 +10,7 @@ from lessons import *
 from bells import BellsContent
 from lectors import LectorsContent
 from errors_helper import ErrorHelper, StatusCode
+from models.global_keys import Key
 
 
 groupsContent = GroupsContent()
@@ -63,6 +64,22 @@ def getGroups():
     return jsonify(json)
 
 
+def createGroup():
+    if request.method != 'POST':
+        abort(400)
+
+    if request.headers['Content-Type'] != 'application/json':
+        abort(400)
+
+    json = request.get_json().copy()
+    group, code = groupsContent.add_from_json(json)
+
+    if code == StatusCode.ok:
+        return jsonify(group.serialized())
+
+    return jsonify(ErrorHelper.make_response_for_code(code))
+
+
 def getLessons(group_id):
     lessons = map(Lesson.serialized, groupsContent.get(group_id).lessons)
     json = {'lessons': lessons}
@@ -76,7 +93,7 @@ def createLesson(group_id):
         json = request.get_json().copy()
     else:
         abort(400)
-    json['group_id'] = group_id
+    json[Key.group_id] = group_id
     lesson, code = lessonsContent.create_from_json(json)
     if lesson is None:
         return jsonify(ErrorHelper.make_response_for_code(code))
@@ -100,7 +117,7 @@ def getLector(lectorId):
     lector = Lector.query.filter(Lector.id == lectorId).first()
     
     if lector is not None:
-        return jsonify(lector.serialized)
+        return jsonify(lector.serialized())
     else:
         abort(404)
 
@@ -112,8 +129,7 @@ def createLector():
     else:
         abort(400)
     lector, code = lectorsContent.create_from_json(json)
-    print(lector, code)
     if lector is None:
         return jsonify(ErrorHelper.make_response_for_code(code))
     else:
-        return jsonify(lector.serialized)
+        return jsonify(lector.serialized())

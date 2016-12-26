@@ -27,7 +27,6 @@ Mako==1.0.4
 MarkupSafe==0.23
 mccabe==0.5.2
 modulegraph==0.10.4
-numpy==1.8.0rc1
 py2app==0.7.3
 pycodestyle==2.0.0
 pydocstyle==1.1.1
